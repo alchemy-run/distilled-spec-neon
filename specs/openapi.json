@@ -6693,18 +6693,57 @@
       ],
       "get": {
         "summary": "Retrieve organization members details",
-        "description": "Retrieves information about the specified organization members.\n",
+        "description": "Retrieves a paginated list of members for the specified organization.\n",
         "tags": [
           "Organizations"
         ],
         "operationId": "getOrganizationMembers",
+        "parameters": [
+          {
+            "name": "sort_by",
+            "description": "Sort the members by the specified field. Defaults to `joined_at`.",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "joined_at",
+              "enum": [
+                "email",
+                "role",
+                "joined_at"
+              ]
+            }
+          },
+          {
+            "$ref": "#/components/parameters/CursorParam"
+          },
+          {
+            "$ref": "#/components/parameters/SortOrderParam"
+          },
+          {
+            "name": "limit",
+            "description": "The maximum number of members to return in the response",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Returned information about organization members",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OrganizationMembersResponse"
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/OrganizationMembersResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/CursorPaginationResponse"
+                    }
+                  ]
                 },
                 "example": {
                   "members": [
@@ -6732,7 +6771,12 @@
                         "email": "user2@email.com"
                       }
                     }
-                  ]
+                  ],
+                  "pagination": {
+                    "next": "eyJtZW1iZXJfaWQiOiI1ZmVlMTNhYy05NTdiLTQwY2QtOGRlMC00ZDQ5NGNjMjhlMjgiLCJzb3J0X2J5Ijoiam9pbmVkX2F0In0=",
+                    "sort_by": "joined_at",
+                    "sort_order": "desc"
+                  }
                 }
               }
             }
@@ -11855,6 +11899,10 @@
             "format": "email",
             "minLength": 1,
             "maxLength": 256
+          },
+          "has_mfa": {
+            "type": "boolean",
+            "description": "Whether the member has MFA (TOTP) enabled"
           }
         }
       },
