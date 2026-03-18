@@ -9833,6 +9833,9 @@
           "max_read_only_endpoints": {
             "type": "integer"
           },
+          "max_read_computes_per_branch": {
+            "type": "integer"
+          },
           "max_allowed_ips": {
             "type": "integer"
           },
