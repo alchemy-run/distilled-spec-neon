@@ -102,7 +102,7 @@
       ],
       "get": {
         "summary": "Get advisor issues",
-        "description": "Analyzes the database for security and performance issues.\nReturns a list of issues categorized by severity (ERROR, WARN, INFO).\n\nRequires read access to the project.\n",
+        "description": "Analyzes the database for security and performance issues.\nReturns a list of issues categorized by severity (ERROR, WARN, INFO).\n\nRequires read access to the project and Data API enabled.\n",
         "operationId": "getProjectAdvisorSecurityIssues",
         "tags": [
           "Project"
@@ -6394,6 +6394,7 @@
           },
           {
             "name": "metrics",
+            "required": true,
             "description": "Specify a list of metrics to include in the response.\nPossible values:\n- `compute_unit_seconds`\n- `root_branch_bytes_month`\n- `child_branch_bytes_month`\n- `instant_restore_bytes_month`\n- `public_network_transfer_bytes`\n- `private_network_transfer_bytes`\n- `extra_branches_month`\n\nA list of metrics can be specified as an array of parameter values or as a comma-separated list in a single parameter value.\n- As an array of parameter values: `metrics=compute_unit_seconds&metrics=extra_branches_month`\n- As a comma-separated list in a single parameter value: `metrics=compute_unit_seconds,extra_branches_month`\n",
             "in": "query",
             "schema": {
@@ -6420,7 +6421,7 @@
             }
           },
           "403": {
-            "description": "This endpoint is not available. It is only supported with Scale, Business, and Enterprise plan accounts.",
+            "description": "This endpoint is not available. It is only supported with Launch, Scale, Business, and Enterprise plan accounts.",
             "content": {
               "application/json": {
                 "schema": {
@@ -8087,7 +8088,7 @@
       },
       "Provisioner": {
         "type": "string",
-        "description": "The Neon compute provisioner.\nSpecify the `k8s-neonvm` provisioner to create a compute endpoint that supports Autoscaling.\n\nProvisioner can be one of the following values:\n* k8s-pod\n* k8s-neonvm\n\nClients must expect, that any string value that is not documented in the description above should be treated as a error. UNKNOWN value if safe to treat as an error too.\n"
+        "description": "The Neon compute provisioner.\nSpecify the `k8s-neonvm` provisioner to create a compute endpoint that supports Autoscaling.\n\nProvisioner can be one of the following values:\n* k8s-pod\n* k8s-neonvm\n* serverless-platform\n\nClients must expect, that any string value that is not documented in the description above should be treated as a error. UNKNOWN value if safe to treat as an error too.\n"
       },
       "PaginationResponse": {
         "type": "object",
@@ -12437,7 +12438,9 @@
             "format": "int64"
           },
           "max_autoscaling_limit": {
-            "$ref": "#/components/schemas/ComputeUnit"
+            "type": "number",
+            "format": "double",
+            "description": "The maximum autoscaling limit in Compute Units.\nA value of 0 indicates no limit is configured.\n"
           },
           "compute_seconds_limit": {
             "type": "integer",
