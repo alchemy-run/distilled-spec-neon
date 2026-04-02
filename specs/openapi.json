@@ -13479,7 +13479,9 @@
                 "user.before_create",
                 "user.created",
                 "send.otp",
-                "send.magic_link"
+                "send.magic_link",
+                "organization.invitation.created",
+                "organization.invitation.accepted"
               ]
             }
           },
