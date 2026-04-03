@@ -6030,7 +6030,9 @@
     "/consumption_history/account": {
       "get": {
         "summary": "Retrieve account consumption metrics (legacy plans)",
-        "description": "Retrieves consumption metrics for Scale and Enterprise plan accounts, and for legacy Scale, Business, and Enterprise plan accounts.\nConsumption history begins at the time the account was upgraded to a supported plan.\n",
+        "description": "Retrieves consumption metrics for Scale and Enterprise plan accounts, and for legacy Scale, Business, and Enterprise plan accounts.\nConsumption history begins at the time the account was upgraded to a supported plan.\n\n**Deprecated**: This endpoint will be removed on June 1, 2026.\n",
+        "deprecated": true,
+        "x-sunset": "2026-06-01",
         "tags": [
           "Consumption"
         ],
@@ -7249,11 +7251,23 @@
     "/regions": {
       "get": {
         "summary": "List supported regions",
-        "description": "Lists supported Neon regions\n",
+        "description": "Lists supported Neon regions.\n\n**Note:** Not all regions are available to all organizations. Pass the `org_id`\nparameter to get an accurate list of regions available to your organization.\n",
         "tags": [
           "Region"
         ],
         "operationId": "getActiveRegions",
+        "parameters": [
+          {
+            "name": "org_id",
+            "description": "Organization ID. When provided, returns only regions available to this organization.\nRecommended for accurate region availability.\n",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z0-9-]{1,60}$"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "The list of active regions",
