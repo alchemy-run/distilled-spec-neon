@@ -7702,7 +7702,7 @@
     "/users/me/organizations": {
       "get": {
         "summary": "List organizations for the current user",
-        "description": "Retrieves the organizations that the currently authenticated user belongs to.\n",
+        "description": "Retrieves the organizations that the currently authenticated user belongs to.\n\nWhen called with an organization- or project-scoped API key (which is not\ntied to a user), this returns the single organization that owns the key.\n",
         "operationId": "getCurrentUserOrganizations",
         "tags": [
           "Users",
