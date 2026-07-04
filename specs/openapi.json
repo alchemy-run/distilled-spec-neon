@@ -15128,6 +15128,13 @@
             "properties": {
               "name": {
                 "type": "string"
+              },
+              "expires_at": {
+                "description": "The date and time when the snapshot will expire.\n\nOmit to leave the current expiration unchanged. Send `null` to\nclear the expiration so the snapshot never expires. A future\ntimestamp sets the absolute expiration.\n",
+                "type": "string",
+                "format": "date-time",
+                "nullable": true,
+                "example": "2030-06-09T18:02:16Z"
               }
             }
           }
